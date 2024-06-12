@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -12,7 +13,9 @@ import com.openclassrooms.mddapi.Exception.BadRequestException;
 import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
+import com.openclassrooms.mddapi.repository.UserRepository;
 
 @Service
 @Transactional
@@ -20,15 +23,17 @@ public class TopicService implements ITopicService {
 
 	private TopicRepository topicRepository;
 
+	private UserRepository userRepository;
+
 	private TopicMapper mapper;
 
-	public TopicService(TopicRepository topicRepository, TopicMapper mapper) {
+	public TopicService(TopicRepository topicRepository, UserRepository userRepository, TopicMapper mapper) {
 		this.topicRepository = topicRepository;
+		this.userRepository = userRepository;
 		this.mapper = mapper;
 	}
 
-
-	/** 
+	/**
 	 * Returns the list of the existing Topics
 	 * 
 	 * @return List<TopicDto>
@@ -38,8 +43,7 @@ public class TopicService implements ITopicService {
 		return mapper.toDto(topicRepository.findAll());
 	}
 
-
-	/** 
+	/**
 	 * Returns the Topic corresponding to the id received as a parameter
 	 * 
 	 * @param id
@@ -58,6 +62,64 @@ public class TopicService implements ITopicService {
 			throw new BadRequestException("Wrong format for Topic id.");
 		} catch (NoSuchElementException e) {
 			throw new NotFoundException("No topic found with id '" + id + "'.");
+		}
+	}
+
+	/**
+	 * subscribes the user to the topic if it is not already the case
+	 * 
+	 * @param topicId
+	 * @param userId
+	 * @throws Exception
+	 */
+	@Override
+	public void subscribeToTopic(String topicId, String userId) throws Exception {
+		try {
+			Optional<Topic> optionalTopic = topicRepository.findById(Long.valueOf(topicId));
+			Optional<User> optionalUser = userRepository.findById(Long.valueOf(userId));
+			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
+				throw new NotFoundException("Either the topic or the user couldn't be found.");
+			} else {
+				Topic topic = optionalTopic.get();
+				User user = optionalUser.get();
+				if (!topic.getUsers().contains(user)) {
+					topic.getUsers().add(user);
+					topicRepository.save(topic);
+				} else {
+					throw new BadRequestException("User already subscribed to this topic.");
+				}
+			}
+		} catch (NumberFormatException e) {
+			throw new BadRequestException("Error with the parameters' format.");
+		}
+	}
+
+	/**
+	 * unsubscribe the user to the topic, if the user is subscribed
+	 * 
+	 * @param topicId
+	 * @param userId
+	 * @throws Exception
+	 */
+	@Override
+	public void unSubscribeToTopic(String topicId, String userId) throws Exception {
+		try {
+			Optional<Topic> optionalTopic = topicRepository.findById(Long.valueOf(topicId));
+			Optional<User> optionalUser = userRepository.findById(Long.valueOf(userId));
+			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
+				throw new NotFoundException("Either the topic or the user couldn't be found.");
+			} else {
+				Topic topic = optionalTopic.get();
+				User user = optionalUser.get();
+				if (topic.getUsers().contains(user)) {
+					topic.getUsers().remove(user);
+					topicRepository.save(topic);
+				} else {
+					throw new BadRequestException("User is not subscribed to this topic.");
+				}
+			}
+		} catch (NumberFormatException e) {
+			throw new BadRequestException("Error with the parameters' format.");
 		}
 	}
 

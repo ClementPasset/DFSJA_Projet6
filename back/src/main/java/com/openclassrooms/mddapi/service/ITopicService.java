@@ -9,4 +9,8 @@ public interface ITopicService {
 	List<TopicDto> getTopics();
 
 	TopicDto getTopic(String id) throws Exception;
+
+	void subscribeToTopic(String topicId, String userId) throws Exception;
+
+	void unSubscribeToTopic(String topicId, String userId) throws Exception;
 }
