@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import org.springframework.stereotype.Component;
+
 import com.openclassrooms.mddapi.DTO.TopicDto;
 import com.openclassrooms.mddapi.model.Topic;
 
-public class TopicMapper {
+@Component
+public class TopicMapper implements EntityMapper<Topic, TopicDto> {
 
     public Topic toEntity(TopicDto dto) {
         Topic topic = new Topic();
