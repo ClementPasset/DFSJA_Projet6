@@ -42,7 +42,7 @@ public class Topic {
 	@CreatedDate
 	private LocalDateTime createdAt;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinTable(name = "topics_posts", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "post_id"))
 	private List<Post> posts;
 
