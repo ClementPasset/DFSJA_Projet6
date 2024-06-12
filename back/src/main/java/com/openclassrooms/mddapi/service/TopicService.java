@@ -30,26 +30,6 @@ public class TopicService implements ITopicService {
 	}
 
 	@Override
-	public TopicDto createTopic(TopicDto topicDto) throws Exception {
-		if (topicDto.getName() == null) {
-			throw new BadRequestException("The name of the topic cannot be null");
-		}
-		return mapper.toDto(topicRepository.save(mapper.toEntity(topicDto)));
-	}
-
-	@Override
-	public void deleteTopic(TopicDto topicDto) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public TopicDto updateTopic(TopicDto topicDto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public TopicDto getTopic(String id) throws Exception {
 		try {
 			Topic topic = topicRepository.findById(Long.valueOf(id)).get();
