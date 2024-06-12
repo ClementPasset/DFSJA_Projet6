@@ -1,44 +1,56 @@
 package com.openclassrooms.mddapi.model;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Entity
 @Table(name = "posts")
+@Data
+@DynamicUpdate
+@AllArgsConstructor
+@NoArgsConstructor
 public class Post {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="post_id")
 	private Long id;
-	
-	@ManyToOne
-	@JoinColumn(name = "topic_id")
-	private Topic topic;
-	
-	// TODO : to finish...
 
-	public Long getId() {
-		return id;
-	}
+	@NonNull
+	private String content;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@CreatedDate
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
 
-	public Topic getTopic() {
-		return topic;
-	}
+	@ManyToMany(mappedBy = "posts")
+	private List<Topic> topics;
 
-	public void setTopic(Topic topic) {
-		this.topic = topic;
-	}
-		
-	
+	@OneToMany(mappedBy = "post")
+	private List<Comment> comments;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinColumn(name = "author_id")
+	private User author;
+
 }
