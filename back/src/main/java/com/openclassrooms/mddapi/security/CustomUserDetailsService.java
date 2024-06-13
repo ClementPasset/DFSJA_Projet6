@@ -1,5 +1,8 @@
 package com.openclassrooms.mddapi.security;
 
+import java.util.ArrayList;
+
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +25,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(email);
         }
-        return (UserDetails) user;
+
+        org.springframework.security.core.userdetails.User userDetails = new org.springframework.security.core.userdetails.User(
+                user.getEmail(), user.getPassword(), new ArrayList<GrantedAuthority>());
+
+        return userDetails;
     }
 
 }
