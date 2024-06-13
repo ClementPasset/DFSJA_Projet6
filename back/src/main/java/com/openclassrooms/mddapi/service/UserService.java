@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import javax.transaction.Transactional;
 
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.Exception.AlreadyExistsException;
 import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.service.JwtService;
@@ -26,6 +28,8 @@ public class UserService implements IUserService {
 
     private JwtService jwtService;
 
+    private AuthenticationManager authManager;
+
     @Override
     public String register(RegisterRequest request) throws AlreadyExistsException {
         if (userRepository.findByEmail(request.getEmail()) != null) {
@@ -40,6 +44,13 @@ public class UserService implements IUserService {
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 
+        return jwtService.generateToken(auth);
+    }
+
+    @Override
+    public String login(LoginRequest request) throws Exception {
+        Authentication auth = authManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         return jwtService.generateToken(auth);
     }
 }
