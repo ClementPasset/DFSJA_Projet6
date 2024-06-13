@@ -36,33 +36,55 @@ public class TopicService implements ITopicService {
 	/**
 	 * Returns the list of the existing Topics
 	 * 
+	 * @return List<Topic>
+	 */
+	@Override
+	public List<Topic> getTopics() {
+		return topicRepository.findAll();
+	}
+
+	/**
+	 * Returns the list of the existing Topics as Dto
+	 * 
 	 * @return List<TopicDto>
 	 */
 	@Override
-	public List<TopicDto> getTopics() {
-		return mapper.toDto(topicRepository.findAll());
+	public List<TopicDto> getTopicsDto() {
+		return mapper.toDto(this.getTopics());
 	}
 
 	/**
 	 * Returns the Topic corresponding to the id received as a parameter
 	 * 
 	 * @param id
-	 * @return TopicDto
+	 * @return Topic
 	 * @throws Exception
 	 */
 	@Override
-	public TopicDto getTopic(String id) throws Exception {
+	public Topic getTopic(String id) throws BadRequestException, NotFoundException {
 		try {
 			Topic topic = topicRepository.findById(Long.valueOf(id)).get();
 			if (topic == null) {
 				throw new NotFoundException("No topic found with id '" + id + "'.");
 			}
-			return mapper.toDto(topic);
+			return topic;
 		} catch (NumberFormatException e) {
 			throw new BadRequestException("Wrong format for Topic id.");
 		} catch (NoSuchElementException e) {
 			throw new NotFoundException("No topic found with id '" + id + "'.");
 		}
+	}
+
+	/**
+	 * Returns the TopicDto corresponding to the id received as a parameter
+	 * 
+	 * @param id
+	 * @return TopicDto
+	 * @throws Exception
+	 */
+	@Override
+	public TopicDto getTopicDto(String id) throws Exception {
+		return mapper.toDto(this.getTopic(id));
 	}
 
 	/**

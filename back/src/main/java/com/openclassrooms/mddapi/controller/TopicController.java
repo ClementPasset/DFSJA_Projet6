@@ -24,13 +24,13 @@ public class TopicController {
 
 	@GetMapping
 	public ResponseEntity<?> getTopics() {
-		return ResponseEntity.ok().body(topicService.getTopics());
+		return ResponseEntity.ok().body(topicService.getTopicsDto());
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getTopic(@PathVariable("id") String id) throws Exception {
 		try {
-			return ResponseEntity.ok().body(topicService.getTopic(id));
+			return ResponseEntity.ok().body(topicService.getTopicDto(id));
 		} catch (BadRequestException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		} catch (NotFoundException e) {

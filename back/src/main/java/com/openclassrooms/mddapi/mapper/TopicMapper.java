@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.DTO.TopicDto;
-import com.openclassrooms.mddapi.model.Post;
 import com.openclassrooms.mddapi.model.Topic;
 
 @Component
@@ -28,7 +27,6 @@ public class TopicMapper implements EntityMapper<Topic, TopicDto> {
         TopicDto dto = new TopicDto();
         dto.setId(topic.getId());
         dto.setName(topic.getName());
-        dto.setPosts(topic.getPosts().stream().map(Post::getId).collect(Collectors.toList()));
 
         return dto;
     }
