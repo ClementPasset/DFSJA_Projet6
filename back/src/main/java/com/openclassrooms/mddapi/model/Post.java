@@ -1,6 +1,7 @@
 package com.openclassrooms.mddapi.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,6 +38,9 @@ public class Post {
 	private Long id;
 
 	@NonNull
+	private String title;
+
+	@NonNull
 	private String content;
 
 	@CreatedDate
@@ -44,10 +48,10 @@ public class Post {
 	private LocalDateTime createdAt;
 
 	@ManyToMany(mappedBy = "posts")
-	private List<Topic> topics;
+	private List<Topic> topics = new ArrayList<Topic>();
 
 	@OneToMany(mappedBy = "post")
-	private List<Comment> comments;
+	private List<Comment> comments = new ArrayList<Comment>();
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	@JoinColumn(name = "author_id")
