@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +13,8 @@ import com.openclassrooms.mddapi.Exception.BadRequestException;
 import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
+import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.PostCreationRequest;
 import com.openclassrooms.mddapi.repository.PostRepository;
 
@@ -103,6 +106,25 @@ public class PostService implements IPostService {
 	@Override
 	public List<PostDto> getPostsDto() {
 		return mapper.toDto(this.getPosts());
+	}
+
+	@Override
+	public List<Post> getSubscribedTopicPosts() {
+		User user = userService.getCurrentUser();
+		List<Topic> subscribedToTopics = user.getTopics();
+		if (subscribedToTopics.size() != 0) {
+			List<Long> subscribedToTopicsId = subscribedToTopics.stream().map(topic -> topic.getId())
+					.collect(Collectors.toList());
+			List<Post> posts = postRepository.findByTopicsIdIsIn(subscribedToTopicsId);
+			return posts;
+		} else {
+			return this.getPosts();
+		}
+	}
+
+	@Override
+	public List<PostDto> getSubscribedTopicPostsDto() {
+		return mapper.toDto(this.getSubscribedTopicPosts());
 	}
 
 }

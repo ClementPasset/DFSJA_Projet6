@@ -18,4 +18,8 @@ public interface IPostService {
     public PostDto getPostDto(String id) throws Exception;
 
     public PostDto createPost(PostCreationRequest request) throws Exception;
+
+    public List<Post> getSubscribedTopicPosts();
+    
+    public List<PostDto> getSubscribedTopicPostsDto();
 }

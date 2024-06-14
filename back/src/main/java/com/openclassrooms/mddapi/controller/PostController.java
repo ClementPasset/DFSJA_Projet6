@@ -51,4 +51,9 @@ public class PostController {
         }
     }
 
+    @GetMapping("/subscribed")
+    public ResponseEntity<?> getSubscribedTopicsPosts() {
+        return ResponseEntity.ok().body(postService.getSubscribedTopicPostsDto());
+    }
+
 }
