@@ -44,7 +44,7 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public Post getPost(String id) throws Exception {
+	public Post getPost(String id) throws NotFoundException, BadRequestException {
 		try {
 			Optional<Post> optionalPost = postRepository.findById(Long.valueOf(id));
 			if (!optionalPost.isPresent()) {
