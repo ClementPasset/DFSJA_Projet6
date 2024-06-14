@@ -50,4 +50,9 @@ public class Topic {
 	@JoinTable(name = "topics_users", joinColumns = @JoinColumn(name = "topic_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> users;
 
+	public void addPost(Post post) {
+		this.getPosts().add(post);
+		post.getTopics().add(this);
+	}
+
 }

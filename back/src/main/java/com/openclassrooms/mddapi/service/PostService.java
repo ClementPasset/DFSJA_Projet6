@@ -12,7 +12,6 @@ import com.openclassrooms.mddapi.Exception.BadRequestException;
 import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.mapper.PostMapper;
 import com.openclassrooms.mddapi.model.Post;
-import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.payload.request.PostCreationRequest;
 import com.openclassrooms.mddapi.repository.PostRepository;
 
@@ -27,17 +26,19 @@ public class PostService implements IPostService {
 
 	private PostMapper mapper;
 
-	private TopicService topicService;
+	private ITopicService topicService;
+
+	private IUserService userService;
 
 	@Override
-	public PostDto createPost(PostCreationRequest request) throws Exception {
+	public PostDto createPost(PostCreationRequest request) throws NotFoundException, BadRequestException {
 		Post post = new Post();
 		post.setTitle(request.getTitle());
 		post.setContent(request.getContent());
-		List<Topic> postTopics = post.getTopics();
 		request.getTopics().forEach(topicId -> {
-			postTopics.add(topicService.getTopic(topicId.toString()));
+			topicService.getTopic(topicId.toString()).addPost(post);
 		});
+		post.setAuthor(userService.getCurrentUser());
 
 		return mapper.toDto(postRepository.save(post));
 	}
