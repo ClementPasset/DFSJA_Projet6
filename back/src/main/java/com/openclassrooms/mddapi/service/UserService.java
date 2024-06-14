@@ -35,6 +35,13 @@ public class UserService implements IUserService {
 
     private AuthenticationManager authManager;
 
+    /**
+     * register a new User and returns the Jwt Token
+     * 
+     * @param request
+     * @return String
+     * @throws AlreadyExistsException
+     */
     @Override
     public String register(RegisterRequest request) throws AlreadyExistsException {
         if (userRepository.findByEmail(request.getEmail()) != null) {
@@ -52,6 +59,13 @@ public class UserService implements IUserService {
         return jwtService.generateToken(auth);
     }
 
+    /**
+     * Returns a Jwt Token to the user logging in
+     * 
+     * @param request
+     * @return String
+     * @throws Exception
+     */
     @Override
     public String login(LoginRequest request) throws Exception {
         Authentication auth = authManager
@@ -59,12 +73,25 @@ public class UserService implements IUserService {
         return jwtService.generateToken(auth);
     }
 
+    /**
+     * Returns the currently logged in user
+     * 
+     * @return User
+     * @throws AuthenticationException
+     */
     public User getCurrentUser() throws AuthenticationException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         return userRepository.findByEmail(auth.getName());
     }
 
+    /**
+     * returns a user from an id
+     * 
+     * @param id
+     * @return User
+     * @throws NotFoundException
+     */
     @Override
     public User getUser(Long id) throws NotFoundException {
         Optional<User> optionalUser = userRepository.findById(id);

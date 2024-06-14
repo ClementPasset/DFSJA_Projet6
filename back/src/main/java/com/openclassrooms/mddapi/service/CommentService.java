@@ -24,6 +24,12 @@ public class CommentService implements ICommentService {
 
     private CommentMapper mapper;
 
+    /**
+     * create a new Comment with a content and a postId
+     * 
+     * @param request
+     * @return CommentDto
+     */
     @Override
     public CommentDto createComment(CommentCreationRequest request) {
         Comment comment = new Comment();

@@ -30,6 +30,14 @@ public class PostService implements IPostService {
 
 	private IUserService userService;
 
+	/**
+	 * create a new post
+	 * 
+	 * @param request
+	 * @return PostDto
+	 * @throws NotFoundException
+	 * @throws BadRequestException
+	 */
 	@Override
 	public PostDto createPost(PostCreationRequest request) throws NotFoundException, BadRequestException {
 		Post post = new Post();
@@ -43,6 +51,14 @@ public class PostService implements IPostService {
 		return mapper.toDto(postRepository.save(post));
 	}
 
+	/**
+	 * retrieves a post with its id
+	 * 
+	 * @param id
+	 * @return Post
+	 * @throws NotFoundException
+	 * @throws BadRequestException
+	 */
 	@Override
 	public Post getPost(String id) throws NotFoundException, BadRequestException {
 		try {
@@ -57,16 +73,33 @@ public class PostService implements IPostService {
 		}
 	}
 
+	/**
+	 * retrieves a post with its id and returns it has a PostDto
+	 * 
+	 * @param id
+	 * @return PostDto
+	 * @throws Exception
+	 */
 	@Override
 	public PostDto getPostDto(String id) throws Exception {
 		return mapper.toDto(this.getPost(id));
 	}
 
+	/**
+	 * returns all the posts
+	 * 
+	 * @return List<Post>
+	 */
 	@Override
 	public List<Post> getPosts() {
 		return postRepository.findAll();
 	}
 
+	/**
+	 * return all the posts as PostDto
+	 * 
+	 * @return List<PostDto>
+	 */
 	@Override
 	public List<PostDto> getPostsDto() {
 		return mapper.toDto(this.getPosts());
