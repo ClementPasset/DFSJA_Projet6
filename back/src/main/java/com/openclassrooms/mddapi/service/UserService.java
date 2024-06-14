@@ -1,14 +1,19 @@
 package com.openclassrooms.mddapi.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.openclassrooms.mddapi.Exception.AlreadyExistsException;
+import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
@@ -53,4 +58,20 @@ public class UserService implements IUserService {
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         return jwtService.generateToken(auth);
     }
+
+    public User getCurrentUser() throws AuthenticationException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        return userRepository.findByEmail(auth.getName());
+    }
+
+    @Override
+    public User getUser(Long id) throws NotFoundException {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (!optionalUser.isPresent()) {
+            throw new NotFoundException("User not found.");
+        }
+        return optionalUser.get();
+    }
+
 }
