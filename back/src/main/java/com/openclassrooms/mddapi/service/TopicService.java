@@ -17,21 +17,20 @@ import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
 @Service
 @Transactional
+@AllArgsConstructor
 public class TopicService implements ITopicService {
 
 	private TopicRepository topicRepository;
 
 	private UserRepository userRepository;
 
-	private TopicMapper mapper;
+	private IUserService userService;
 
-	public TopicService(TopicRepository topicRepository, UserRepository userRepository, TopicMapper mapper) {
-		this.topicRepository = topicRepository;
-		this.userRepository = userRepository;
-		this.mapper = mapper;
-	}
+	private TopicMapper mapper;
 
 	/**
 	 * Returns the list of the existing Topics
@@ -102,8 +101,11 @@ public class TopicService implements ITopicService {
 			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
 				throw new NotFoundException("Either the topic or the user couldn't be found.");
 			} else {
-				Topic topic = optionalTopic.get();
 				User user = optionalUser.get();
+				if (user != userService.getCurrentUser()) {
+					throw new BadRequestException("Wrong user id.");
+				}
+				Topic topic = optionalTopic.get();
 				if (!topic.getUsers().contains(user)) {
 					topic.getUsers().add(user);
 					topicRepository.save(topic);
@@ -131,8 +133,11 @@ public class TopicService implements ITopicService {
 			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
 				throw new NotFoundException("Either the topic or the user couldn't be found.");
 			} else {
-				Topic topic = optionalTopic.get();
 				User user = optionalUser.get();
+				if (user != userService.getCurrentUser()) {
+					throw new BadRequestException("Wrong user id.");
+				}
+				Topic topic = optionalTopic.get();
 				if (topic.getUsers().contains(user)) {
 					topic.getUsers().remove(user);
 					topicRepository.save(topic);
