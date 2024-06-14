@@ -40,7 +40,7 @@ public class Comment {
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
-	@ManyToOne(cascade = { CascadeType.PERSIST, CascadeType.PERSIST }, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "post_id")
 	private Post post;
 

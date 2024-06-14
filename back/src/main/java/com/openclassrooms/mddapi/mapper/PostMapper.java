@@ -7,18 +7,21 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.DTO.PostDto;
 import com.openclassrooms.mddapi.model.Post;
-import com.openclassrooms.mddapi.service.TopicService;
+import com.openclassrooms.mddapi.service.ITopicService;
 
 @Component
 public class PostMapper implements EntityMapper<Post, PostDto> {
 
     private TopicMapper topicMapper;
 
-    private TopicService topicService;
+    private CommentMapper commentMapper;
 
-    public PostMapper(TopicMapper topicMapper, TopicService topicService) {
+    private ITopicService topicService;
+
+    public PostMapper(TopicMapper topicMapper, ITopicService topicService, CommentMapper commentMapper) {
         this.topicMapper = topicMapper;
         this.topicService = topicService;
+        this.commentMapper = commentMapper;
     }
 
     @Override
@@ -32,6 +35,9 @@ public class PostMapper implements EntityMapper<Post, PostDto> {
         dto.setCreatedAt(entity.getCreatedAt());
         if (entity.getTopics() != null) {
             dto.setTopics(topicMapper.toDto(entity.getTopics()));
+        }
+        if (entity.getComments() != null) {
+            dto.setComments(commentMapper.toDto(entity.getComments()));
         }
         dto.setId(entity.getId());
 

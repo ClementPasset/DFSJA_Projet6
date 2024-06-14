@@ -21,7 +21,7 @@ public class PostDto {
 
     private List<TopicDto> topics;
 
-    private List<Long> comments;
+    private List<CommentDto> comments;
 
     private Long author;
 }
