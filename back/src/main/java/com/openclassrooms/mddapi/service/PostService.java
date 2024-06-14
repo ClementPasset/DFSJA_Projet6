@@ -108,6 +108,12 @@ public class PostService implements IPostService {
 		return mapper.toDto(this.getPosts());
 	}
 
+	
+	/** 
+	 * Get the Posts that belongs to the topics subscribed by the user. If the user subscribed to 0 topic, we return all the posts
+	 * 
+	 * @return List<Post>
+	 */
 	@Override
 	public List<Post> getSubscribedTopicPosts() {
 		User user = userService.getCurrentUser();
@@ -122,6 +128,12 @@ public class PostService implements IPostService {
 		}
 	}
 
+	
+	/** 
+	 * Get the Posts that belongs to the topics subscribed by the user, as DTOs. If the user subscribed to 0 topic, we return all the posts as DTOs
+	 * 
+	 * @return List<PostDto>
+	 */
 	@Override
 	public List<PostDto> getSubscribedTopicPostsDto() {
 		return mapper.toDto(this.getSubscribedTopicPosts());
