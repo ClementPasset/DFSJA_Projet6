@@ -121,7 +121,7 @@ public class PostService implements IPostService {
 		if (subscribedToTopics.size() != 0) {
 			List<Long> subscribedToTopicsId = subscribedToTopics.stream().map(topic -> topic.getId())
 					.collect(Collectors.toList());
-			List<Post> posts = postRepository.findByTopicsIdIsIn(subscribedToTopicsId);
+			List<Post> posts = postRepository.findDistinctByTopicsIdIsIn(subscribedToTopicsId);
 			return posts;
 		} else {
 			return this.getPosts();

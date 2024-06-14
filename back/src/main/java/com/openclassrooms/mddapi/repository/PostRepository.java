@@ -9,5 +9,5 @@ import com.openclassrooms.mddapi.model.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-    public List<Post> findByTopicsIdIsIn(List<Long> topicsId);
+    public List<Post> findDistinctByTopicsIdIsIn(List<Long> topicsId);
 }
