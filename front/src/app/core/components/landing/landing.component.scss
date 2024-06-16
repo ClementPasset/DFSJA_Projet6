@@ -1,20 +1,46 @@
+@import "../../../_variables";
+#landing {
+  margin: auto;
+}
 #logo {
   display: block;
   width: 80%;
-  margin: 4em auto 2em auto;
+  margin: $margin auto;
 }
 #landing__buttons {
   display: flex;
   width: 100%;
   flex-direction: column;
   align-items: center;
+  margin: auto;
   button {
     padding: 1em;
-    min-width: 60%;
-    max-width: 80%;
-    margin: 2em;
-    border-radius: 0.5em;
-    background-color: #fff;
-    border: 1px solid black;
+    width: 60%;
+    margin: $margin;
+    border-radius: $border-radius;
+    background-color: $light-bg;
+    border: $border;
+    transition: all 0.2s;
+    &:hover {
+      cursor: pointer;
+      background-color: $accent-color;
+      color: $light-color;
+      font-weight: bold;
+    }
+  }
+}
+
+@media #{$small-up} {
+  #landing {
+    width: 60%;
+  }
+}
+@media #{$medium-up} {
+  #landing__buttons {
+    width: 80%;
+    flex-direction: row;
+    button {
+      width: 40%;
+    }
   }
 }
