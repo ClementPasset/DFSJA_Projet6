@@ -61,20 +61,17 @@ export class AuthFormComponent implements OnInit {
 
   public onSubmitForm(): void {
     this.isLoading = true;
-    if (this.isLogin) {
-      //TODO: call login service's method
-    } else {
-      this.authService.registerUser(this.authForm.value).subscribe({
-        next: () => {
-          this.router.navigate(["/posts"]);
-          this.isLoading = false;
-        },
-        error: () => {
-          this.formInError = true;
-          this.isLoading = false;
-        },
-      });
-    }
+    const authServiceMethodToCall = this.isLogin ? this.authService.loginUser : this.authService.registerUser;
+    authServiceMethodToCall(this.authForm.value).subscribe({
+      next: () => {
+        this.router.navigate(["/"]);
+        this.isLoading = false;
+      },
+      error: () => {
+        this.formInError = true;
+        this.isLoading = false;
+      }
+    })
   }
 
   public onGoBack(): void {
