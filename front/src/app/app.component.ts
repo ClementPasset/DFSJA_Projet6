@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.router.events.forEach(event => {
       if (event instanceof NavigationStart) {
-        this.displayHeader = event.url !== "/";
+        this.displayHeader = !((event.url === "/") || (/\/auth\/.*/.test(event.url)));
       }
     });
   }
