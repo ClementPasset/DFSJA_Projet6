@@ -1,0 +1,138 @@
+@import "../../../_variables";
+
+header {
+  position: fixed;
+  background-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 2px -2px 4px black;
+  width: 100%;
+  display: none;
+}
+
+#arrow {
+  box-sizing: border-box;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transform: translate(0, 0);
+
+  &::before,
+  &::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    top: 35px;
+    left: 35px;
+    padding: 5px;
+  }
+
+  &::before {
+    transform: rotate(-45deg) scale(50%) translate(-82px, 60px);
+    border-left: 4px solid black;
+    border-top: 4px solid black;
+  }
+
+  &::after {
+    transform: translate(3px, 81px);
+    border-top: 2.5px solid black;
+  }
+}
+
+main {
+  max-width: 80%;
+  margin: 100px auto;
+  img {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+.form {
+  &__title {
+    text-align: center;
+  }
+  &__control {
+    display: flex;
+    flex-direction: column;
+    margin: $margin auto;
+    justify-content: center;
+    align-items: center;
+    &__label {
+      width: 80%;
+    }
+    & label {
+      font-size: 1.2em;
+    }
+    & input {
+      width: 80%;
+      padding: calc($margin/2);
+      border: $border;
+      border-radius: $border-radius;
+      &:focus {
+        border: 1px solid $accent-color;
+        outline: 1px solid $accent-color;
+      }
+    }
+    &--error {
+      width: 80%;
+      font-size: 0.8em;
+      color: rgb(243, 66, 66);
+      margin: 0;
+    }
+  }
+  &__submit {
+    display: block;
+    margin: 0 auto;
+    padding: calc($margin/3) $margin;
+    border-radius: $border-radius;
+    border: none;
+    cursor: pointer;
+    background-color: $accent-color;
+    color: $light-color;
+    font-weight: bold;
+    font-size: 1.3em;
+    &:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+  }
+}
+
+@media #{$small-up} {
+  main {
+    img {
+      width: 60%;
+    }
+  }
+
+  .form {
+    &__control {
+      width: 60%;
+    }
+  }
+}
+
+@media #{$medium-up} {
+  header {
+    display: inline-block;
+  }
+  #logo{
+    display: none;
+  }
+  #arrow {
+    transform: translate(0, 25px);
+  }
+  main {
+    img {
+      width: 40%;
+    }
+  }
+
+  .form {
+    &__control {
+      max-width: 40%;
+    }
+  }
+}

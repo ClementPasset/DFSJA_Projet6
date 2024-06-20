@@ -1,0 +1,36 @@
+<header>
+    <img src="../../../../assets/logo_p6.png" alt="MDD Logo" width="150px" />
+</header>
+<section id="register">
+    <div (click)="onGoBack()" id="arrow"></div>
+    <main>
+        <img id="logo" src="../../../../assets/logo_p6.png" alt="Mdd Logo" />
+        <form class="form" (ngSubmit)="onSubmitForm()" [formGroup]="authForm">
+            <h1 class="form__title">{{isLogin ? "Se connecter" : "Inscription"}}</h1>
+            <div *ngIf="authForm.controls['username']" class="form__control">
+                <div class="form__control__label"><label for="username">Nom d'utilisateur</label></div>
+                <input type="text" name="username" id="username" formControlName="username">
+                <p *ngIf="authForm.controls['username'].errors && authForm.controls['username'].touched"
+                    class="form__control--error">Le
+                    champ est requis.</p>
+            </div>
+            <div class="form__control">
+                <div class="form__control__label"><label for="email">Adresse e-mail</label></div>
+                <input type="email" name="email" id="email" [formControl]="emailCtrl">
+                <p *ngIf="emailCtrl.errors && emailCtrl.touched" class="form__control--error">
+                    {{emailCtrl.errors["required"] ? "Le champ est requis." : "Le champ est invalide."}}
+                </p>
+            </div>
+            <div class="form__control">
+                <div class="form__control__label"><label for="password">Mot de passe</label></div>
+                <input type="password" name="password" id="password" formControlName="password">
+                <p *ngIf="passwordCtrl.touched" class="form__control--error">{{ passwordError | async }}</p>
+            </div>
+            <button [disabled]="authForm.invalid" class="form__submit" type="submit">{{isLogin ? "Se connecter" :
+                "S'inscrire"}}</button>
+            <p *ngIf="formInError" class="form__control--error">Une erreur est survenue lors de la soumission du
+                formulaire</p>
+        </form>
+        <div *ngIf="isLoading" class="loading">loading...</div>
+    </main>
+</section>
