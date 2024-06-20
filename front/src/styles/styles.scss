@@ -1,4 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+@import "../app/_variables";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+* {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*::selection {
+  color: $light-color;
+  background-color: $accent-color;
+}
+.loading {
+  width:250px;
+  height: 250px;
+  background-color: rgba(119, 99, 197, .8);
+  border-radius: $border-radius;
+  z-index: 9999;
+  position: fixed;
+  inset: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 250px;
+  text-align: center;
+  vertical-align: middle;
+  color: $light-color;
+  font-size: 2em;
+  letter-spacing: .25em;
+}
