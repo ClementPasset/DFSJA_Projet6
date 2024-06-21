@@ -17,6 +17,7 @@ import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.response.TokenResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.service.JwtService;
 
@@ -43,7 +44,7 @@ public class UserService implements IUserService {
      * @throws AlreadyExistsException
      */
     @Override
-    public String register(RegisterRequest request) throws AlreadyExistsException {
+    public TokenResponse register(RegisterRequest request) throws AlreadyExistsException {
         if (userRepository.findByEmail(request.getEmail()) != null) {
             throw new AlreadyExistsException("This email has already been used.");
         }
@@ -56,7 +57,7 @@ public class UserService implements IUserService {
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 
-        return jwtService.generateToken(auth);
+        return new TokenResponse(jwtService.generateToken(auth));
     }
 
     /**
@@ -67,10 +68,11 @@ public class UserService implements IUserService {
      * @throws Exception
      */
     @Override
-    public String login(LoginRequest request) throws Exception {
+    public TokenResponse login(LoginRequest request) throws Exception {
         Authentication auth = authManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        return jwtService.generateToken(auth);
+
+        return new TokenResponse(jwtService.generateToken(auth));
     }
 
     /**
