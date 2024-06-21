@@ -63,8 +63,11 @@ export class AuthFormComponent implements OnInit {
     this.isLoading = true;
     const authServiceMethodToCall = this.isLogin ? this.authService.loginUser : this.authService.registerUser;
     authServiceMethodToCall(this.authForm.value).subscribe({
-      next: () => {
-        this.router.navigate(["/"]);
+      next: (isOk) => {
+        if (isOk) {
+          this.router.navigate(["/"]);
+        }
+        this.formInError = !isOk;
         this.isLoading = false;
       },
       error: () => {
