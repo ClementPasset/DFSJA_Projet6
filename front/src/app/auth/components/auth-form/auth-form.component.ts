@@ -65,7 +65,7 @@ export class AuthFormComponent implements OnInit {
     authServiceMethodToCall(this.authForm.value).subscribe({
       next: (isOk) => {
         if (isOk) {
-          this.router.navigate(["/"]);
+          this.router.navigate(["/post"]);
         }
         this.formInError = !isOk;
         this.isLoading = false;
