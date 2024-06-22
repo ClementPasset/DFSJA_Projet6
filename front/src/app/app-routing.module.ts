@@ -4,7 +4,8 @@ import { LandingComponent } from './core/components/landing/landing.component';
 
 const routes: Routes = [
   { path: '', component: LandingComponent },
-  { path: "auth", loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule) }
+  { path: "auth", loadChildren: () => import("./auth/auth.module").then(m => m.AuthModule) },
+  { path: "post", loadChildren: () => import("./posts/posts.module").then(m => m.PostsModule) }
 ];
 
 @NgModule({
