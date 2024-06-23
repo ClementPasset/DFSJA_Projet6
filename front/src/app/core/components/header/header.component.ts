@@ -7,8 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor() { }
+  public links!: { link: string, label: string }[];
+  public displaySidebar!: boolean;
 
-  ngOnInit(): void { }
+  public constructor() { }
+
+  public ngOnInit(): void {
+    this.displaySidebar = false;
+    this.links = [
+      { link: "/post", label: "Articles" },
+      { link: "/topic", label: "Thèmes" }
+    ];
+  }
+
+  public onUpdateSidebarVisibility(): void {
+    this.displaySidebar = !this.displaySidebar;
+  }
 
 }

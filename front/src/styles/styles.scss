@@ -6,15 +6,19 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  list-style-type: none;
+}
+html, body{
+  overflow: hidden;
 }
 *::selection {
   color: $light-color;
   background-color: $accent-color;
 }
 .loading {
-  width:250px;
+  width: 250px;
   height: 250px;
-  background-color: rgba(119, 99, 197, .8);
+  background-color: rgba(119, 99, 197, 0.8);
   border-radius: $border-radius;
   z-index: 9999;
   position: fixed;
@@ -25,5 +29,9 @@
   vertical-align: middle;
   color: $light-color;
   font-size: 2em;
-  letter-spacing: .25em;
+  letter-spacing: 0.25em;
+}
+
+main {
+  margin-top: 125px;
 }
