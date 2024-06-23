@@ -1,0 +1,5 @@
+<main>
+    <p>post-detail works!</p>
+    <p *ngIf="post$ | async as post">{{post.title}}</p>
+    <p *ngIf="post$ | async as post">{{post.content}}</p>
+</main>

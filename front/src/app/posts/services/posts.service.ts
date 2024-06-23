@@ -12,4 +12,8 @@ export class PostsService {
   public getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post`);
   }
+
+  public getPost(id: Number): Observable<Post> {
+    return this.http.get<Post>(`${environment.baseUrl}/post/${id}`);
+  }
 }
