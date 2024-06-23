@@ -6,11 +6,16 @@ import { SharedModule } from '../shared/shared.module';
 import { PostsService } from './services/posts.service';
 import { PostsResolver } from './resolvers/posts.resolver';
 import { CoreModule } from '../core/core.module';
+import { PostDetailComponent } from './components/post-detail/post-detail.component';
+import { SinglePostResolver } from './resolvers/single-post.resolver';
+import { NewPostComponent } from './components/new-post/new-post.component';
 
 
 @NgModule({
   declarations: [
-    PostsListComponent
+    PostsListComponent,
+    PostDetailComponent,
+    NewPostComponent
   ],
   imports: [
     PostsRoutingModule,
@@ -19,7 +24,8 @@ import { CoreModule } from '../core/core.module';
   ],
   providers: [
     PostsService,
-    PostsResolver
+    PostsResolver,
+    SinglePostResolver
   ]
 })
 export class PostsModule { }
