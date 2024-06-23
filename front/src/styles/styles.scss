@@ -9,7 +9,7 @@
   list-style-type: none;
 }
 html, body{
-  overflow: hidden;
+  overflow-x: hidden;
 }
 *::selection {
   color: $light-color;
