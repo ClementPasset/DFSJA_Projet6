@@ -7,14 +7,23 @@ import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.DTO.TopicDto;
 import com.openclassrooms.mddapi.model.Topic;
+import com.openclassrooms.mddapi.model.User;
+import com.openclassrooms.mddapi.service.UserService;
 
 @Component
 public class TopicMapper implements EntityMapper<Topic, TopicDto> {
+
+    private UserService userService;
+
+    public TopicMapper(UserService userService) {
+        this.userService = userService;
+    }
 
     public Topic toEntity(TopicDto dto) {
         Topic topic = new Topic();
         topic.setId(dto.getId());
         topic.setName(dto.getName());
+        topic.setDescription(dto.getDescription());
 
         return topic;
     }
@@ -27,6 +36,9 @@ public class TopicMapper implements EntityMapper<Topic, TopicDto> {
         TopicDto dto = new TopicDto();
         dto.setId(topic.getId());
         dto.setName(topic.getName());
+        dto.setDescription(topic.getDescription());
+        User currentUser = userService.getCurrentUser();
+        dto.setSubscribed(topic.getUsers().contains(currentUser));
 
         return dto;
     }

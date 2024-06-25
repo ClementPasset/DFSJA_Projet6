@@ -41,6 +41,9 @@ public class Topic {
 	@NonNull
 	private String name;
 
+	@Column(columnDefinition = "TEXT")
+	private String description;
+
 	@Column(name = "created_at")
 	@CreatedDate
 	private LocalDateTime createdAt;

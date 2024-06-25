@@ -17,7 +17,7 @@ public interface ITopicService {
 
 	TopicDto getTopicDto(String id) throws Exception;
 
-	void subscribeToTopic(String topicId, String userId) throws Exception;
+	void subscribeToTopic(String topicId) throws Exception;
 
-	void unSubscribeToTopic(String topicId, String userId) throws Exception;
+	void unSubscribeToTopic(String topicId) throws Exception;
 }

@@ -15,7 +15,6 @@ import com.openclassrooms.mddapi.mapper.TopicMapper;
 import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.TopicRepository;
-import com.openclassrooms.mddapi.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -25,8 +24,6 @@ import lombok.AllArgsConstructor;
 public class TopicService implements ITopicService {
 
 	private TopicRepository topicRepository;
-
-	private UserRepository userRepository;
 
 	private IUserService userService;
 
@@ -94,20 +91,16 @@ public class TopicService implements ITopicService {
 	 * @throws Exception
 	 */
 	@Override
-	public void subscribeToTopic(String topicId, String userId) throws Exception {
+	public void subscribeToTopic(String topicId) throws Exception {
 		try {
 			Optional<Topic> optionalTopic = topicRepository.findById(Long.valueOf(topicId));
-			Optional<User> optionalUser = userRepository.findById(Long.valueOf(userId));
-			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
-				throw new NotFoundException("Either the topic or the user couldn't be found.");
+			User currentUser = userService.getCurrentUser();
+			if (!optionalTopic.isPresent()) {
+				throw new NotFoundException("The topic couldn't be found.");
 			} else {
-				User user = optionalUser.get();
-				if (user != userService.getCurrentUser()) {
-					throw new BadRequestException("Wrong user id.");
-				}
 				Topic topic = optionalTopic.get();
-				if (!topic.getUsers().contains(user)) {
-					topic.getUsers().add(user);
+				if (!topic.getUsers().contains(currentUser)) {
+					topic.getUsers().add(currentUser);
 					topicRepository.save(topic);
 				} else {
 					throw new BadRequestException("User already subscribed to this topic.");
@@ -126,20 +119,16 @@ public class TopicService implements ITopicService {
 	 * @throws Exception
 	 */
 	@Override
-	public void unSubscribeToTopic(String topicId, String userId) throws Exception {
+	public void unSubscribeToTopic(String topicId) throws Exception {
 		try {
 			Optional<Topic> optionalTopic = topicRepository.findById(Long.valueOf(topicId));
-			Optional<User> optionalUser = userRepository.findById(Long.valueOf(userId));
-			if (!optionalTopic.isPresent() || !optionalUser.isPresent()) {
-				throw new NotFoundException("Either the topic or the user couldn't be found.");
+			User currentUser = userService.getCurrentUser();
+			if (!optionalTopic.isPresent()) {
+				throw new NotFoundException("The topic couldn't be found.");
 			} else {
-				User user = optionalUser.get();
-				if (user != userService.getCurrentUser()) {
-					throw new BadRequestException("Wrong user id.");
-				}
 				Topic topic = optionalTopic.get();
-				if (topic.getUsers().contains(user)) {
-					topic.getUsers().remove(user);
+				if (topic.getUsers().contains(currentUser)) {
+					topic.getUsers().remove(currentUser);
 					topicRepository.save(topic);
 				} else {
 					throw new BadRequestException("User is not subscribed to this topic.");

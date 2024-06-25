@@ -40,11 +40,10 @@ public class TopicController {
 		}
 	}
 
-	@PostMapping("/{topicId}/subscribe/{userId}")
-	public ResponseEntity<?> subscribeToTopic(@PathVariable("topicId") String topicId,
-			@PathVariable("userId") String userId) throws Exception {
+	@PostMapping("/{topicId}/subscribe")
+	public ResponseEntity<?> subscribeToTopic(@PathVariable("topicId") String topicId) throws Exception {
 		try {
-			topicService.subscribeToTopic(topicId, userId);
+			topicService.subscribeToTopic(topicId);
 			return ResponseEntity.ok().build();
 		} catch (NotFoundException e) {
 			return ResponseEntity.notFound().build();
@@ -53,11 +52,10 @@ public class TopicController {
 		}
 	}
 
-	@DeleteMapping("/{topicId}/subscribe/{userId}")
-	public ResponseEntity<?> unSubscribeToTopic(@PathVariable("topicId") String topicId,
-			@PathVariable("userId") String userId) throws Exception {
+	@DeleteMapping("/{topicId}/subscribe")
+	public ResponseEntity<?> unSubscribeToTopic(@PathVariable("topicId") String topicId) throws Exception {
 		try {
-			topicService.unSubscribeToTopic(topicId, userId);
+			topicService.unSubscribeToTopic(topicId);
 			return ResponseEntity.ok().build();
 		} catch (NotFoundException e) {
 			return ResponseEntity.notFound().build();
