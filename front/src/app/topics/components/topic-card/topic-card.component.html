@@ -1,0 +1,6 @@
+<div class="card">
+    <p class="card__title">{{topic.name}}</p>
+    <p class="card__description">{{topic.description}}</p>
+    <button *ngIf="!topic.subscribed" class="card__button" (click)="subscribeToTopic()">S'abonner</button>
+    <button *ngIf="topic.subscribed" class="card__button card__button--outlined" (click)="unsubscribeToTopic()">Se désabonner</button>
+</div>

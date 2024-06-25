@@ -1,0 +1,36 @@
+@import "../../../variables";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+  border-radius: $border-radius;
+  background-color: $grey-bg;
+  &__title {
+    font-weight: bold;
+  }
+
+  &__button {
+    background-color: $accent-color;
+    border: none;
+    border-radius: $border-radius;
+    color: $light-color;
+    padding: 0.8em 2em;
+    width: fit-content;
+    margin: 0 auto;
+    cursor: pointer;
+    border: 1px solid $accent-color;
+    &:hover {
+      background-color: $light-color;
+      color: $accent-color;
+    }
+    &--outlined {
+      background-color: $light-color;
+      color: $accent-color;
+      &:hover {
+        background-color: $accent-color;
+        color: $light-color;
+      }
+    }
+  }
+}
