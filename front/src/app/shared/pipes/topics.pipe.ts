@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { Topic } from "src/app/posts/models/topic.model";
+import { Topic } from "../models/topic.model";
 
 @Pipe({
     name: "topics"
