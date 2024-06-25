@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TopicsService } from 'src/app/core/services/topics.service';
 import { Topic } from 'src/app/shared/models/topic.model';
-import { TopicsService } from '../../services/topics.service';
 
 @Component({
   selector: 'app-topic-card',
