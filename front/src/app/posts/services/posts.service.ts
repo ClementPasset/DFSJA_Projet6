@@ -4,6 +4,7 @@ import { Post } from '../models/post.model';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Comment } from '../models/comment.model';
+import { CreatePostRequest } from '../models/CreatePostRequest.model';
 
 @Injectable()
 export class PostsService {
@@ -35,5 +36,9 @@ export class PostsService {
         this._comments$.next([...this._comments$.getValue(), comment]);
       })
     ).subscribe();
+  }
+
+  public createPost(formValue: CreatePostRequest): void {
+    this.http.post<Post>(`${environment.baseUrl}/post`, formValue).subscribe();
   }
 }

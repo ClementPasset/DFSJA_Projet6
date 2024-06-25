@@ -1,3 +1,13 @@
 <main>
-    <p>new-post works!</p>
+    <form [formGroup]="newPostForm">
+        <input type="text" name="title" id="title" placeholder="Titre de l'article" formControlName="title" />
+        <select *ngIf="topics$ | async as topics" name="topics" id="topics" multiple size="{{topics.length + 1}}"
+            formControlName="topics">
+            <optgroup label="Sélectionnez un ou plusieurs thèmes">
+                <option *ngFor="let topic of topics" value="{{topic.id}}">{{topic.name}}</option>
+            </optgroup>
+        </select>
+        <textarea name="content" id="content" placeholder="Contenu de l'article" formControlName="content"></textarea>
+        <button type="submit" [disabled]="!newPostForm.valid" (click)="onSubmitForm()">Créer</button>
+    </form>
 </main>
