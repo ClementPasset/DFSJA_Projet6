@@ -1,5 +1,5 @@
 import { Comment } from "./comment.model";
-import { Topic } from "./topic.model";
+import { Topic } from "../../shared/models/topic.model";
 
 export class Post {
     public id!: Number;
