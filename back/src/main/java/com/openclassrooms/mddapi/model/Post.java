@@ -44,6 +44,7 @@ public class Post {
 	private String title;
 
 	@NonNull
+	@Column(columnDefinition = "TEXT")
 	private String content;
 
 	@CreatedDate

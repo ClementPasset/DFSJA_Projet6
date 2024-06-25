@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import com.openclassrooms.mddapi.DTO.CommentDto;
+import com.openclassrooms.mddapi.DTO.UserDto;
 import com.openclassrooms.mddapi.model.Comment;
 import com.openclassrooms.mddapi.service.IUserService;
 
@@ -18,7 +19,7 @@ public class CommentMapper implements EntityMapper<Comment, CommentDto> {
     public CommentDto toDto(Comment entity) {
         CommentDto dto = new CommentDto();
         dto.setContent(entity.getContent());
-        dto.setAuthorId(entity.getAuthor().getId());
+        dto.setAuthor(new UserDto(entity.getAuthor().getId(), entity.getAuthor().getUsername()));
         dto.setCreatedAt(entity.getCreatedAt());
         dto.setId(entity.getId());
         return dto;
@@ -32,7 +33,7 @@ public class CommentMapper implements EntityMapper<Comment, CommentDto> {
     @Override
     public Comment toEntity(CommentDto dto) {
         Comment comment = new Comment();
-        comment.setAuthor(userService.getUser(dto.getAuthorId()));
+        comment.setAuthor(userService.getUser(dto.getAuthor().getId()));
         comment.setContent(dto.getContent());
         comment.setCreatedAt(dto.getCreatedAt());
         comment.setId(dto.getId());

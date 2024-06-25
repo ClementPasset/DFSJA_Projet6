@@ -30,7 +30,7 @@ public class PostMapper implements EntityMapper<Post, PostDto> {
         dto.setContent(entity.getContent());
         dto.setTitle(entity.getTitle());
         if (entity.getAuthor() != null) {
-            dto.setAuthor(entity.getAuthor().getId());
+            dto.setAuthor(entity.getAuthor().getUsername());
         }
         dto.setCreatedAt(entity.getCreatedAt());
         if (entity.getTopics() != null) {
