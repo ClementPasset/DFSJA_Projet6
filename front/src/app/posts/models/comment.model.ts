@@ -1,6 +1,8 @@
+import { Author } from "./author.model";
+
 export class Comment {
     public id!: Number;
     public content!: string;
-    public authorId!: Number;
+    public author!: Author;
     public createdAt!: string;
 }
