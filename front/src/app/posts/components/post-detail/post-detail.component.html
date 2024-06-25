@@ -1,5 +1,36 @@
-<main>
-    <p>post-detail works!</p>
-    <p *ngIf="post$ | async as post">{{post.title}}</p>
-    <p *ngIf="post$ | async as post">{{post.content}}</p>
+<main *ngIf="post$ | async as post">
+    <svg routerLink=".." class="arrow" width="41" height="24" viewBox="0 0 41 24" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+            d="M0.939339 10.9393C0.353554 11.5251 0.353554 12.4749 0.939339 13.0607L10.4853 22.6066C11.0711 23.1924 12.0208 23.1924 12.6066 22.6066C13.1924 22.0208 13.1924 21.0711 12.6066 20.4853L4.12132 12L12.6066 3.51472C13.1924 2.92893 13.1924 1.97919 12.6066 1.3934C12.0208 0.807611 11.0711 0.807611 10.4853 1.3934L0.939339 10.9393ZM41 10.5L2 10.5V13.5L41 13.5V10.5Z"
+            fill="black" />
+    </svg>
+    <section class="post">
+        <h1 class="post__title">{{post.title}}</h1>
+        <div class="post__info">
+            <p class="post__date">{{post.createdAt | date}}</p>
+            <p class="post__author">{{post.author}}</p>
+            <p class="post__topic">{{post.topics | topics}}</p>
+        </div>
+        <p class="post__content">{{post.content}}</p>
+        <hr />
+        <section class="comments">
+            <h2 class="comments__title">Commentaires ({{(comments$ | async)?.length}})</h2>
+            <div *ngFor="let comment of comments$ | async" class="comment">
+                <p class="comment__content">{{comment.content}}</p>
+                <p class="comment__author">{{comment.author.username}}</p>
+            </div>
+            <form [formGroup]="commentForm" class="new-comment">
+                <textarea [formControl]="newCommentCtrl" class="new-comment__input" name="newcomment" id="newcomment"
+                    placeholder="Écrivez ici votre commentaire"></textarea>
+                <svg (click)="createComment(post.id)" class="new-comment__send" width="44" height="44"
+                    viewBox="0 0 49 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M45.9999 3L22.3499 26.65" stroke="#7763C5" stroke-width="5" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                    <path d="M46 3L30.95 46L22.35 26.65L3 18.05L46 3Z" stroke="#7763C5" stroke-width="5"
+                        stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </form>
+        </section>
+    </section>
 </main>
