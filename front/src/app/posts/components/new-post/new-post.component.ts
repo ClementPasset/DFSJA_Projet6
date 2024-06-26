@@ -4,6 +4,7 @@ import { Observable, tap } from 'rxjs';
 import { TopicsService } from 'src/app/core/services/topics.service';
 import { Topic } from 'src/app/shared/models/topic.model';
 import { PostsService } from '../../services/posts.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-post',
@@ -15,7 +16,7 @@ export class NewPostComponent implements OnInit {
   public topics$!: Observable<Topic[]>;
   public newPostForm!: FormGroup;
 
-  public constructor(private topicsService: TopicsService, private fb: FormBuilder, private postsService: PostsService) { }
+  public constructor(private topicsService: TopicsService, private fb: FormBuilder, private postsService: PostsService, private router: Router) { }
 
   public ngOnInit(): void {
     this.topics$ = this.topicsService.topics$;
@@ -31,6 +32,7 @@ export class NewPostComponent implements OnInit {
   public onSubmitForm(): void {
     if (this.newPostForm.valid) {
       this.postsService.createPost(this.newPostForm.value);
+      this.router.navigate(["/post"]);
     }
   }
 
