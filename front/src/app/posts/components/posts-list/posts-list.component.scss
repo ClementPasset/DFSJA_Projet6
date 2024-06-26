@@ -16,6 +16,10 @@
     background-color: $accent-color;
     color: $light-color;
     cursor: pointer;
+    &:hover {
+      background-color: $light-bg;
+      color: $accent-color;
+    }
   }
   & .order {
     margin: 1em auto;
