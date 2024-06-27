@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from '../models/post.model';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, delay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Comment } from '../models/comment.model';
 import { CreatePostRequest } from '../models/CreatePostRequest.model';
@@ -16,8 +16,17 @@ export class PostsService {
     return this._comments$.asObservable();
   }
 
+  private _posts$ = new BehaviorSubject<Post[]>([]);
+  get posts$(): Observable<Post[]> {
+    return this._posts$.asObservable();
+  }
+
   public getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/post/subscribed`);
+    return this.http.get<Post[]>(`${environment.baseUrl}/post/subscribed`).pipe(
+      tap(posts => {
+        this._posts$.next(posts);
+      })
+    );
   }
 
   public getPost(id: Number): Observable<Post> {
@@ -38,7 +47,7 @@ export class PostsService {
     ).subscribe();
   }
 
-  public createPost(formValue: CreatePostRequest): void {
-    this.http.post<Post>(`${environment.baseUrl}/post`, formValue).subscribe();
+  public createPost(formValue: CreatePostRequest): Observable<Post> {
+    return this.http.post<Post>(`${environment.baseUrl}/post`, formValue);
   }
 }

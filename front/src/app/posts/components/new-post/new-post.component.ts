@@ -31,8 +31,9 @@ export class NewPostComponent implements OnInit {
 
   public onSubmitForm(): void {
     if (this.newPostForm.valid) {
-      this.postsService.createPost(this.newPostForm.value);
-      this.router.navigate(["/post"]);
+      this.postsService.createPost(this.newPostForm.value).subscribe(() => {
+        this.router.navigate(["/post"]);
+      });
     }
   }
 
