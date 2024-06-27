@@ -29,6 +29,20 @@ header {
         &.active {
           color: $accent-color;
         }
+
+        & svg {
+          &:focus {
+            outline: none;
+          }
+          &.active {
+            border: 2px solid $accent-color;
+            border-radius: 100%;
+            & path {
+              stroke: $accent-color;
+              stroke-opacity: 1;
+            }
+          }
+        }
       }
     }
   }
@@ -96,6 +110,17 @@ header {
     justify-self: flex-end;
     align-self: flex-end;
     margin: 0.5em;
+    &:focus {
+      outline: none;
+    }
+    &.active {
+      border: 2px solid $accent-color;
+      border-radius: 100%;
+      & path {
+        stroke: $accent-color;
+        stroke-opacity: 1;
+      }
+    }
   }
 
   &.active {

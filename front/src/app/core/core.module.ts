@@ -6,12 +6,14 @@ import { LandingComponent } from './components/landing/landing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TopicsService } from './services/topics.service';
 import { SessionService } from './services/session.service';
+import { MeComponent } from './components/me/me.component';
 
 
 @NgModule({
   declarations: [
     LandingComponent,
-    HeaderComponent
+    HeaderComponent,
+    MeComponent
   ],
   imports: [
     CommonModule,
