@@ -1,0 +1,60 @@
+@import "../../../variables";
+
+.arrow {
+  width: 10%;
+  margin: auto 0.5em;
+  cursor: pointer;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: 0 auto;
+
+  &__title,
+  &__topics,
+  &__content {
+    width: 100%;
+    margin: 1em auto;
+    padding: 0.5em;
+    font-size: 1em;
+    border: 1px solid $accent-color;
+    border-radius: $border-radius;
+    &:focus {
+      outline: 1px solid $accent-color;
+    }
+  }
+
+  &__topics {
+    overflow-y: hidden;
+  }
+
+  &__content {
+    resize: none;
+    height: 250px;
+  }
+
+  &__button {
+    width: fit-content;
+    margin: 1em auto;
+    padding: 0.5em 2.5em;
+    border-radius: $border-radius;
+    border: 1px solid $accent-color;
+    background-color: $accent-color;
+    color: $light-color;
+    cursor: pointer;
+    &:hover {
+      background-color: $light-bg;
+      color: $accent-color;
+    }
+    &:disabled {
+      opacity: 0.6;
+      &:hover {
+        background-color: $accent-color;
+        color: $light-color;
+        cursor: default;
+      }
+    }
+  }
+}
