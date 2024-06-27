@@ -11,6 +11,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
+import com.openclassrooms.mddapi.payload.response.TokenResponse;
+
 import lombok.AllArgsConstructor;
 
 @Service
@@ -18,16 +20,17 @@ import lombok.AllArgsConstructor;
 public class JwtService {
     private JwtEncoder jwtEncoder;
 
-    public String generateToken(Authentication auth) {
+    public TokenResponse generateToken(Authentication auth) {
         Instant now = Instant.now();
+        Instant expiresAt = now.plus(1, ChronoUnit.DAYS);
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.DAYS))
+                .expiresAt(expiresAt)
                 .subject(auth.getName())
                 .build();
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters
                 .from(JwsHeader.with(MacAlgorithm.HS256).build(), claims);
-        return this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue();
+        return new TokenResponse(this.jwtEncoder.encode(jwtEncoderParameters).getTokenValue(), expiresAt);
     }
 
 }

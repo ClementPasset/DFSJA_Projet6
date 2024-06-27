@@ -57,7 +57,14 @@ public class UserService implements IUserService {
 
         Authentication auth = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword());
 
-        return new TokenResponse(jwtService.generateToken(auth));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        TokenResponse tokenResponse = jwtService.generateToken(auth);
+        User currentUser = getCurrentUser();
+        tokenResponse.setEmail(currentUser.getEmail());
+        tokenResponse.setUsername(currentUser.getUsername());
+
+        return tokenResponse;
     }
 
     /**
@@ -72,7 +79,14 @@ public class UserService implements IUserService {
         Authentication auth = authManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
-        return new TokenResponse(jwtService.generateToken(auth));
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        TokenResponse tokenResponse = jwtService.generateToken(auth);
+        User currentUser = getCurrentUser();
+        tokenResponse.setEmail(currentUser.getEmail());
+        tokenResponse.setUsername(currentUser.getUsername());
+
+        return tokenResponse;
     }
 
     /**
