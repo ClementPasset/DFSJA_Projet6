@@ -24,7 +24,7 @@ export class PostsService {
   public getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.baseUrl}/post/subscribed`).pipe(
       tap(posts => {
-        this._posts$.next(posts);
+        this._posts$.next(posts.sort((a, b) => (new Date(a.createdAt)) < (new Date(b.createdAt)) ? 1 : -1));
       })
     );
   }
