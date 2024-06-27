@@ -8,6 +8,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CoreModule } from '../core/core.module';
 import { AuthFormComponent } from './components/auth-form/auth-form.component';
 import { LoginComponent } from './components/login/login.component';
+import { SessionService } from '../core/services/session.service';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { LoginComponent } from './components/login/login.component';
     CoreModule
   ],
   providers: [
-    AuthService
+    AuthService,
+    SessionService
   ]
 })
 export class AuthModule { }

@@ -5,18 +5,17 @@ import { Observable, catchError, map, of } from "rxjs";
 import { environment } from "src/environments/environment";
 import { LoginRequest } from "../models/LoginRequest.model";
 import { LoginResponse } from "../models/LoginResponse.interface";
+import { SessionService } from "../../core/services/session.service";
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private sessionService: SessionService) { }
 
   registerUser = (formValue: RegisterRequest): Observable<boolean> => {
     return this.http.post<LoginResponse>(`${environment.baseUrl}/auth/register`, formValue).pipe(
       map(response => {
-        if (response?.token) {
-          sessionStorage.setItem("mdd_jwt", response.token);
-        }
+        this.sessionService.storeUserInformations(response);
         return true;
       }),
       catchError(() => of(false))
@@ -26,9 +25,7 @@ export class AuthService {
   loginUser = (formValue: LoginRequest): Observable<boolean> => {
     return this.http.post<LoginResponse>(`${environment.baseUrl}/auth/login`, formValue).pipe(
       map(response => {
-        if (response?.token) {
-          sessionStorage.setItem("mdd_jwt", response.token);
-        }
+        this.sessionService.storeUserInformations(response);
         return true;
       }),
       catchError(() => of(false))

@@ -5,6 +5,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { LandingComponent } from './components/landing/landing.component';
 import { HeaderComponent } from './components/header/header.component';
 import { TopicsService } from './services/topics.service';
+import { SessionService } from './services/session.service';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TopicsService } from './services/topics.service';
     CommonModule
   ],
   providers: [
-    TopicsService
+    TopicsService,
+    SessionService
   ]
 })
 export class CoreModule { }

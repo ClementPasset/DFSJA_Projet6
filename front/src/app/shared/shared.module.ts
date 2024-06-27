@@ -2,8 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { httpInterceptorProviders } from './Interceptors';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TopicsPipe } from './pipes/topics.pipe';
+import { CoreModule } from '../core/core.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { TopicsPipe } from './pipes/topics.pipe';
     TopicsPipe
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CoreModule
   ],
   exports: [
     HttpClientModule,
