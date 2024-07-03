@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { TopicsService } from 'src/app/core/services/topics.service';
 import { Topic } from 'src/app/shared/models/topic.model';
 import { PostsService } from '../../services/posts.service';
