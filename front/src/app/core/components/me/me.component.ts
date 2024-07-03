@@ -49,4 +49,9 @@ export class MeComponent implements OnInit {
     ).subscribe();
   }
 
+  public onLogOut(): void {
+    this.sessionService.clearUserInformations();
+    this.router.navigateByUrl("/auth/login");
+  }
+
 }
