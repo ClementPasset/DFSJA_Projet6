@@ -7,4 +7,7 @@
         <p (click)="onLogOut()">Se déconnecter</p>
     </form>
     <hr />
+    <section class="cards">
+        <app-topic-card *ngFor="let topic of topics$ | async" [topic]="topic"></app-topic-card>
+    </section>
 </main>
