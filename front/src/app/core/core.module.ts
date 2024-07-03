@@ -7,6 +7,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { TopicsService } from './services/topics.service';
 import { SessionService } from './services/session.service';
 import { MeComponent } from './components/me/me.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { MeComponent } from './components/me/me.component';
   ],
   imports: [
     CommonModule,
-    CoreRoutingModule
+    CoreRoutingModule,
+    SharedModule
   ],
   exports: [
     HeaderComponent,
