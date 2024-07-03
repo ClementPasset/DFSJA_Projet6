@@ -12,18 +12,12 @@ export class TopicsService {
     return this._topics$.asObservable();
   }
 
-  private lastTopicsUpdate = 0;
-
   public constructor(private http: HttpClient) { }
 
   public getTopics() {
-    // 3_600_000 miliseconds = 1 hour, because topics won't be updated regularly on server side
-    if (Date.now() - this.lastTopicsUpdate <= 3_600_000) {
-      return;
-    }
+
     this.http.get<Topic[]>(`${environment.baseUrl}/topic`).pipe(
       tap(topics => {
-        this.lastTopicsUpdate = Date.now();
         this._topics$.next(topics);
       })
     ).subscribe();
