@@ -8,13 +8,15 @@ import { TopicsService } from './services/topics.service';
 import { SessionService } from './services/session.service';
 import { MeComponent } from './components/me/me.component';
 import { SharedModule } from '../shared/shared.module';
+import { TopicCardComponent } from './components/topic-card/topic-card.component';
 
 
 @NgModule({
   declarations: [
     LandingComponent,
     HeaderComponent,
-    MeComponent
+    MeComponent,
+    TopicCardComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +25,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     HeaderComponent,
-    CommonModule
+    CommonModule,
+    TopicCardComponent
   ],
   providers: [
     TopicsService,
