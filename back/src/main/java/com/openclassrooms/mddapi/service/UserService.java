@@ -17,6 +17,7 @@ import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.request.UpdateUserRequest;
 import com.openclassrooms.mddapi.payload.response.TokenResponse;
 import com.openclassrooms.mddapi.repository.UserRepository;
 import com.openclassrooms.mddapi.security.service.JwtService;
@@ -115,6 +116,28 @@ public class UserService implements IUserService {
             throw new NotFoundException("User not found.");
         }
         return optionalUser.get();
+    }
+
+    /**
+     * @param request
+     * @return TokenResponse
+     */
+    @Override
+    public TokenResponse updateUser(UpdateUserRequest request) {
+        User currentUser = getCurrentUser();
+        currentUser.setEmail(request.getEmail());
+        currentUser.setUsername(request.getUsername());
+        User updatedUser = userRepository.save(currentUser);
+
+        Authentication auth = new UsernamePasswordAuthenticationToken(updatedUser.getEmail(),
+                updatedUser.getPassword());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        TokenResponse tokenResponse = this.jwtService.generateToken(auth);
+        tokenResponse.setEmail(updatedUser.getEmail());
+        tokenResponse.setUsername(updatedUser.getUsername());
+
+        return tokenResponse;
     }
 
 }

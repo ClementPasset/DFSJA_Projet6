@@ -7,6 +7,7 @@ import com.openclassrooms.mddapi.Exception.NotFoundException;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.LoginRequest;
 import com.openclassrooms.mddapi.payload.request.RegisterRequest;
+import com.openclassrooms.mddapi.payload.request.UpdateUserRequest;
 import com.openclassrooms.mddapi.payload.response.TokenResponse;
 
 public interface IUserService {
@@ -17,4 +18,6 @@ public interface IUserService {
     public User getUser(Long id) throws NotFoundException;
 
     public User getCurrentUser() throws AuthenticationException;
+
+    public TokenResponse updateUser(UpdateUserRequest request);
 }
