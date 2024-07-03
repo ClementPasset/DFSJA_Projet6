@@ -28,6 +28,10 @@
 
   &__topics {
     overflow-y: hidden;
+    & option:checked{
+      background: linear-gradient($accent-color, $accent-color);
+      color: $light-color;
+    }
   }
 
   &__content {
