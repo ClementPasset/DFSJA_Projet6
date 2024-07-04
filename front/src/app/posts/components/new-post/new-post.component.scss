@@ -62,3 +62,15 @@
     }
   }
 }
+
+@media #{$small-up} {
+  .form{
+    width: 60%;
+  }
+}
+
+@media #{$medium-up} {
+  .form{
+    width: 30%;
+  }
+}

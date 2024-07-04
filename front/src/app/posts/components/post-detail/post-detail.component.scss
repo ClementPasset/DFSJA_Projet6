@@ -80,3 +80,11 @@ hr {
     }
   }
 }
+
+@media #{$medium-up} {
+  .post{
+    &__info{
+      width: 30%;
+    }
+  }
+}
