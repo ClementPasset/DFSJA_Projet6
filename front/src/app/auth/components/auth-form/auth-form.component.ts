@@ -78,7 +78,7 @@ export class AuthFormComponent implements OnInit {
   }
 
   public onGoBack(): void {
-    history.back();
+    this.router.navigateByUrl("/");
   }
 
 }
