@@ -1,10 +1,10 @@
 <main>
     <h1 class="title">Profil utilisateur</h1>
-    <form (submit)="onSubmitForm()" [formGroup]="updateForm">
-        <input type="text" name="username" id="username" formControlName="username">
-        <input type="text" name="email" id="email" formControlName="email">
-        <button type="submit">Sauvegarder</button>
-        <p (click)="onLogOut()">Se déconnecter</p>
+    <form (submit)="onSubmitForm()" [formGroup]="updateForm" class="form">
+        <input class="form__input" type="text" name="username" id="username" formControlName="username">
+        <input class="form__input" type="text" name="email" id="email" formControlName="email">
+        <button class="form__button" type="submit">Sauvegarder</button>
+        <p class="form__logout" (click)="onLogOut()">Se déconnecter</p>
     </form>
     <hr />
     <section class="cards">

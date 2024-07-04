@@ -1,6 +1,81 @@
-.cards{
-    display: flex;
-    flex-direction: column;
-    margin: 1em;
-    gap: 1em;
+@import "../../../variables";
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+  gap: 1em;
+}
+
+.title {
+  text-align: center;
+  font-weight: bold;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+
+  &__input {
+    width: 80%;
+    margin: 0.5em auto;
+    padding: 0.5em;
+    border: 1px solid $accent-color;
+    border-radius: $border-radius;
+    &:focus {
+      outline: 1px solid $accent-color;
+    }
+  }
+
+  &__button {
+    width: fit-content;
+    margin: 0.5em auto;
+    padding: 0.5em 1em;
+    background-color: $accent-color;
+    color: $light-color;
+    border: 1px solid $accent-color;
+    border-radius: $border-radius;
+    cursor: pointer;
+    &:hover {
+      color: $accent-color;
+      background-color: $light-color;
+    }
+  }
+
+  &__logout {
+    color: red;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0.5em auto;
+    width: fit-content;
+  }
+}
+
+@media #{$small-up} {
+  main {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media #{$medium-up} {
+  main {
+    width: 80%;
+  }
+  .form{
+    width: 60%;
+    margin: auto;
+  }
+
+  .cards {
+    & app-topic-card {
+      width: 45%;
+    }
+  }
 }
