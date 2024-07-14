@@ -1,25 +1,44 @@
-# P6-Full-Stack-reseau-dev
+# P6 - Développez une application full-stack complète
 
-## Front
+Ce repo correspond au code du projet 6 de la formation Développeur Full-Stack Java/Angular.\
+Ci-dessous les différentes étapes qui vont permettre de cloner le projet et de le faire tourner sur votre machine
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+## Cloner le projet
 
-Don't forget to install your node_modules before starting (`npm install`).
+Tout d'abord, il faudra cloner le repository, grâce à la commande suivante : 
 
-### Development server
+`git clone https://github.com/ClementPasset/DFSJA_Projet6.git`
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Configurer le projet
 
-### Build
+Pour la partie base de données, il faudra configurer comme il faut les credentials pour le back-end.\
+* Possibilité de modifier le fichier `application.properties` pour y inscrire en dur les éléments de connexion (déconseillé)
+* Utiliser des variables d'environnement pour configurer l'URL d'accès, l'identifiant et le mot de passe
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Également, il faudra configurer la clé utilisée pour les Json Web Token, de la même manière
 
-### Where to start
+## Lancer le back-end
 
-As you may have seen if you already started the app, a simple home page containing a logo, a title and a button is available. If you take a look at its code (in the `home.component.html`) you will see that an external UI library is already configured in the project.
+Grâce à la commande suivante, le serveur back-end tournera en local sur le port 9000 :\
+*Attention à être dans le bon dossier : back/*
 
-This library is `@angular/material`, it's one of the most famous in the angular ecosystem. As you can see on their docs (https://material.angular.io/), it contains a lot of highly customizable components that will help you design your interfaces quickly.
+`mvn spring-boot:run`
 
-Note: I recommend to use material however it's not mandatory, if you prefer you can get ride of it.
+## Lancer le front-end
 
-Good luck!
+Tout d'abord, il faudra télécharger les dépendances :\
+*Attention à être dans le bon dossier : front/*
+
+`npm i`
+
+Enfin vous pourrez lancer le front en local, sur le port 4200, grâce à la commande suivante :\
+*Attention à être dans le bon dossier : front/*
+
+`npm run start`
+
+## Insérer des données dans la base de données
+
+Pour que l'application fonctionne, nous avons besoins d'insérer certaines données.\
+Les articles et les utilisateurs peuvent être créés depuis l'application front-end, mais il faut à minima charger des thèmes en base de données.
+
+Des données d'exemple peuvent être chargées grâce au fichier `data.sql` qui se trouve dans le dossier `./back/src/main/resources/`
