@@ -7,5 +7,11 @@ import com.openclassrooms.mddapi.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+    /**
+     * find a user thanks to the email address passed as a parameter
+     * 
+     * @param email
+     * @return User
+     */
     User findByEmail(String email);
 }
